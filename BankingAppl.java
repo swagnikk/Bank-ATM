@@ -1,39 +1,46 @@
-import java.util.Map;
-import java.util.Scanner;
-import java.util.ArrayList;
-import java.util.HashMap;
+//import java.util.Map;
+//import java.util.Scanner;
+//import java.util.ArrayList;
+//import java.util.HashMap;
+import java.util.*;
 
 public class BankingAppl {
     public static void main(String[] args){
         //DRIVER PROGRAM
         //all these operations happen in the class bankAccount
+        HashMap<String,String> bankDetail = new HashMap<String,String>(Map.of("SBI2386","James","BOI2612","Danny","IB51542","Rohit"));//Creating HashMap
+        HashMap<String,Integer> custDetail = new HashMap<String,Integer>(Map.of("SBI2386",1234,"BOI2612",2341,"IB51542",3412));//Creating HashMap
 
-        HashMap<Integer,String> bankDetail = new HashMap<Integer,String>(Map.of(1234,"James", 2341,"Danny",3412,"Rohit"));//Creating HashMap
-        HashMap<Integer,String> custDetail = new HashMap<Integer,String>(Map.of(1234,"SBI23886", 2341,"BOI26125",3412,"IB515426"));//Creating HashMap
+        bankDetail.put("UB87586","Leo");
+        bankDetail.put("ICI8595","Dennis");
+        bankDetail.put("CB51674","Brendon");
 
-        bankDetail.put(4231,"Leo");
-        bankDetail.put(4123,"Dennis");
-        bankDetail.put(3421,"Brendon");
+        custDetail.put("UB87586",4231);
+        custDetail.put("ICI8595",4123);
+        custDetail.put("CB51674",3421);
 
-        custDetail.put(4231,"UB875846");
-        custDetail.put(4123,"ICI85195");
-        custDetail.put(3421,"CB516674");
+        System.out.println("ENTER ACCOUNT NUMBER: ");
+        String accountNo = (new Scanner(System.in)).next();
 
-        System.out.println("ENTER PIN: ");
-        int pin = (new Scanner(System.in)).nextInt();
-
-        if ( bankDetail.containsKey(pin) ) {
-            bankAccount obj1 = new bankAccount(bankDetail.get(pin),custDetail.get(pin));
-            obj1.showMenu();
+        if ( custDetail.containsKey(accountNo) ) {
+            System.out.println("ENTER PIN: ");
+            int pin = (new Scanner(System.in).nextInt());
+            if (custDetail.containsValue(pin)){
+                bankAccount obj1 = new bankAccount(bankDetail.get(accountNo),accountNo);
+                obj1.showMenu();
+            }
+            else{
+                System.out.println("INVALID PIN");
+            }
         }
         else{
-            System.out.println("INVALID PIN");
+            System.out.println("INVALID ACCOUNT NUMBER");
         }
     }
 }
 
 class bankAccount{
-    int balance, prevTransactions;
+    int balance;
     String customerID, customerName;
 
     //we will need these values for displaying the welcome message
@@ -45,14 +52,13 @@ class bankAccount{
     void deposit(int amount){
         if (amount > 0){
             balance += amount;
-            prevTransactions -= amount;
         }
     }
 
     void withdraw(int amount){
         if (amount > 0){
-           balance -= amount;
-           prevTransactions = -amount;
+            balance -= amount;
+            System.out.println("PLEASE COLLECT THE CASH AND YOUR CARD");
         }
     }
 
@@ -61,7 +67,7 @@ class bankAccount{
         char option = '\0'; //initialize char with some value
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Welcome "+customerName);
+        System.out.println("\nWelcome "+customerName+"!");
         System.out.println("Your Account ID: "+customerID+"\n");
 
         System.out.println("1: Check Balance");
@@ -79,7 +85,7 @@ class bankAccount{
             switch(option){
                 case '1':{
                     System.out.println("\n--------------------------");
-                    System.out.println("Balance: "+balance);
+                    System.out.println("Balance: ₹"+balance);
                     System.out.println("--------------------------\n");
                     break;
                 }
@@ -125,7 +131,7 @@ class bankAccount{
                     }
                     else{
                         for (int i = 0; i < prevTransact.size(); i++) {
-                            System.out.println(prevTransact.get(i));
+                            System.out.println("₹"+prevTransact.get(i));
                         }
                     }
                     break;
