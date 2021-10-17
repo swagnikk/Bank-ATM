@@ -62,6 +62,12 @@ class bankAccount{
         }
     }
 
+    void checkInterest(int principal,int time,int n,float rate){
+        double accountBalance = principal * Math.pow(1 + (rate / n), n * time);
+        System.out.print("Interest Earned: ₹");
+        System.out.format("%.4f", accountBalance-principal); //SHOW ONLY UP TO 4 DECIMAL PLACES
+    }
+
     void showMenu(){
         ArrayList<Integer> prevTransact = new ArrayList<>();
         char option = '\0'; //initialize char with some value
@@ -74,7 +80,8 @@ class bankAccount{
         System.out.println("2: Deposit");
         System.out.println("3: Withdraw");
         System.out.println("4: Previous Transactions");
-        System.out.println("5: Exit");
+        System.out.println("5: Check Interest");
+        System.out.println("6: Exit");
 
         do{
             System.out.println("--------------------------");
@@ -138,6 +145,19 @@ class bankAccount{
                 }
                 case '5':{
                     System.out.println("\n--------------------------");
+                    int principal = balance;
+                    System.out.println("ENTER TIME: ");
+                    int time = (new Scanner(System.in)).nextInt();
+                    System.out.println("ENTER n: ");
+                    int n = (new Scanner(System.in)).nextInt();
+                    System.out.println("ENTER INTEREST RATE: ");
+                    float rate = (new Scanner(System.in)).nextFloat();
+                    checkInterest(principal,time,n,rate);
+                    System.out.println("\n--------------------------");
+                    break;
+                }
+                case '6':{
+                    System.out.println("\n--------------------------");
                     System.out.println("THANK YOU FOR VISITING US!");
                     System.out.println("\n--------------------------");
                     break;
@@ -146,6 +166,6 @@ class bankAccount{
                     System.out.println(("Invalid Option.\nPlease enter again"));
                     break;
             }
-        } while(option != '5');
+        } while(option != '6');
     }
 }
